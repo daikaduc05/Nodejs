@@ -28,6 +28,9 @@ function handleDetail(filename){
     }
 }
 
+function handleLog(data){
+    fs.appendFileSync(__dirname + '/data/log.txt', data + '\n');
+}
 const server = http.createServer((req, res) => {
     
     var urll = url.parse(req.url, true);
@@ -51,6 +54,12 @@ const server = http.createServer((req, res) => {
             var detail = handleDetail(urll.query.filename);
             res.write(detail);
         }
+    }
+    else if(urll.pathname == '/log'){
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        var data = urll.query.msg;
+        var log = handleLog(data);
+        res.write("Đã ghi log!!");
     }
     res.end();
 }).listen(8080);
