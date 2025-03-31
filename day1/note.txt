@@ -1,0 +1,92 @@
+fs	Đọc/ghi file hệ thống
+path	Làm việc với đường dẫn file
+http	Tạo web server đơn giản
+os	Lấy thông tin hệ điều hành
+url	Phân tích URL
+events	Tạo và lắng nghe sự kiện tùy chỉnh
+crypto	Mã hóa, tạo hash, token
+child_process	Chạy process con, như gọi lệnh shell
+
+// Các thuộc tính của request
+req.method          // HTTP method (GET, POST, etc.)
+req.url             // URL của request
+req.headers         // Headers của request
+req.statusCode      // Status code
+req.statusMessage   // Status message
+req.socket          // Socket object
+req.connection      // Socket object (alias của socket)
+req.httpVersion     // HTTP version
+req.complete        // Boolean - request đã hoàn thành
+req.rawHeaders      // Raw headers array
+req.rawTrailers     // Raw trailers array
+req.trailers        // Trailer headers
+req.aborted         // Boolean - request đã bị hủy
+req.abort()         // Hủy request
+req.destroy()       // Hủy request và socket
+req.pause()         // Tạm dừng request
+req.resume()        // Tiếp tục request
+
+// Các thuộc tính của response
+res.statusCode      // Status code
+res.statusMessage   // Status message
+res.headers         // Headers của response
+res.headersSent     // Boolean - headers đã gửi
+res.finished        // Boolean - response đã kết thúc
+res.socket          // Socket object
+res.connection      // Socket object (alias của socket)
+res.sendDate        // Boolean - tự động gửi Date header
+res.writable        // Boolean - có thể ghi
+res.writableEnded   // Boolean - đã kết thúc ghi
+res.writableFinished // Boolean - đã hoàn thành ghi
+res.writableLength  // Số bytes trong buffer
+res.writableHighWaterMark // Giới hạn buffer
+
+// Các phương thức của response
+res.writeHead(statusCode[, statusMessage][, headers])
+res.write(chunk[, encoding][, callback])
+res.end([data][, encoding][, callback])
+res.setHeader(name, value)
+res.getHeader(name)
+res.removeHeader(name)
+res.hasHeader(name)
+res.flushHeaders()
+res.flush()
+res.pause()
+res.resume()
+
+const http = require('http');
+
+// Tạo server với đầy đủ options
+const server = http.createServer({
+    // Các options có thể có
+    keepAlive: true,           // Giữ kết nối
+    keepAliveMsecs: 1000,      // Thời gian giữ kết nối (ms)
+    maxHeadersCount: 2000,     // Số lượng headers tối đa
+    timeout: 120000,           // Thời gian timeout (ms)
+    headersTimeout: 65000,     // Thời gian timeout cho headers
+    requestTimeout: 30000,     // Thời gian timeout cho request
+    allowHalfOpen: false,      // Cho phép kết nối nửa mở
+    maxRequestsPerSocket: 0,   // Số request tối đa trên mỗi socket
+    uniqueHeaders: ['set-cookie', 'cookie', 'x-powered-by'] // Headers duy nhất
+}, (req, res) => {
+    // Xử lý request
+});
+
+// Ví dụ URL: http://user:pass@example.com:8080/path?name=value#hash
+
+parsedUrl = {
+    protocol: 'http:',      // Giao thức (http:, https:)
+    slashes: true,         // Có dấu // sau protocol
+    auth: 'user:pass',     // Thông tin xác thực
+    host: 'example.com:8080', // Host và port
+    port: '8080',          // Port
+    hostname: 'example.com', // Hostname không có port
+    hash: '#hash',         // Phần hash của URL
+    search: '?name=value', // Query string với dấu ?
+    query: {              // Query parameters đã parse
+        name: 'value'
+    },
+    pathname: '/path',     // Đường dẫn không có query string
+    path: '/path?name=value', // Đường dẫn đầy đủ với query string
+    href: 'http://example.com:8080/path?name=value#hash' // URL đầy đủ
+}
