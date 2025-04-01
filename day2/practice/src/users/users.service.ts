@@ -5,7 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
-  private idCounting = 0;
+  private idCounting = 3;
   private users: UserModel[] = [
     new UserModel(undefined, 1, 'John', 'john@example.com'),
     new UserModel(undefined, 2, 'Jane', 'jane@example.com'),
